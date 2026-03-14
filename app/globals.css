@@ -1,26 +1,170 @@
-@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Lato:wght@300;400;700&display=swap');
 
+/* ─── CSS VARIABLES ─────────────────────────────────────────── */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Core palette — warm ivory & deep burgundy church tones */
+  --cream:        #FAF7F2;
+  --ivory:        #F3EDE3;
+  --warm-white:   #FDFBF8;
+  --gold:         #B8922A;
+  --gold-light:   #D4AF5A;
+  --gold-pale:    #F0E4C4;
+  --burgundy:     #6B2737;
+  --burgundy-deep:#4A1826;
+  --burgundy-soft:#8B3A4A;
+  --brown:        #5C3D2E;
+  --brown-light:  #A07850;
+  --text-dark:    #2C1810;
+  --text-mid:     #6B4E3D;
+  --text-soft:    #9C7A6A;
+  --border:       #DDD0BC;
+  --border-light: #EDE5D8;
+
+  /* Typography */
+  --font-display: 'Cinzel', serif;
+  --font-body:    'Cormorant Garamond', serif;
+  --font-sans:    'Lato', sans-serif;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
+/* ─── RESET ──────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-body);
+  background: var(--warm-white);
+  color: var(--text-dark);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+a { text-decoration: none; color: inherit; }
+img { display: block; max-width: 100%; }
+button { cursor: pointer; }
+
+/* ─── UTILITY CLASSES ────────────────────────────────────────── */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+/* Typography */
+.font-display { font-family: var(--font-display); }
+.font-body    { font-family: var(--font-body); }
+.font-sans    { font-family: var(--font-sans); }
+
+.section-label {
+  font-family: var(--font-display);
+  font-size: 10px;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+  font-weight: 600;
+  color: var(--text-dark);
+  line-height: 1.2;
+}
+
+.section-title .accent { color: var(--burgundy); }
+
+/* Buttons */
+.btn-primary {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--warm-white);
+  background: var(--burgundy);
+  padding: 14px 36px;
+  border: 2px solid var(--burgundy);
+  transition: background 0.3s, color 0.3s, transform 0.2s;
+}
+.btn-primary:hover {
+  background: var(--burgundy-deep);
+  border-color: var(--burgundy-deep);
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--burgundy);
+  background: transparent;
+  padding: 14px 36px;
+  border: 2px solid var(--burgundy);
+  transition: all 0.3s;
+}
+.btn-secondary:hover {
+  background: var(--burgundy);
+  color: var(--warm-white);
+}
+
+.btn-gold {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--text-dark);
+  background: var(--gold);
+  padding: 14px 36px;
+  border: 2px solid var(--gold);
+  transition: all 0.3s;
+}
+.btn-gold:hover {
+  background: var(--gold-light);
+  border-color: var(--gold-light);
+  transform: translateY(-1px);
+}
+
+/* Ornamental divider */
+.ornament-divider {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+.ornament-divider .line {
+  height: 1px;
+  width: 60px;
+  background: linear-gradient(to right, transparent, var(--gold));
+}
+.ornament-divider .line.rev {
+  background: linear-gradient(to left, transparent, var(--gold));
+}
+.ornament-divider .diamond {
+  width: 7px;
+  height: 7px;
+  background: var(--gold);
+  transform: rotate(45deg);
+  flex-shrink: 0;
+}
+
+/* Cards */
+.card-hover {
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.card-hover:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 16px 48px rgba(107,39,55,0.12);
+}
+
+/* ─── RESPONSIVE ─────────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .container { padding: 0 28px; }
+}
+@media (max-width: 768px) {
+  .container { padding: 0 20px; }
+  .hide-mobile { display: none !important; }
+}
+@media (max-width: 480px) {
+  .hide-sm { display: none !important; }
 }
