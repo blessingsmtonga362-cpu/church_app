@@ -189,7 +189,7 @@ export default function Footer() {
                 <div className="ft-svc-txt">
                   First Service &nbsp;·&nbsp; 7:30 AM<br />
                   Main Service &nbsp;·&nbsp; 9:30 AM<br />
-                  <span style={{ fontSize:"0.87em", opacity:0.6 }}>123 Faith Avenue, Lilongwe</span>
+                  <span style={{ fontSize:"0.87em", opacity:0.6 }}>Machinjiri Area 9, Blantyre</span>
                 </div>
               </div>
               <div className="ft-socials">

@@ -471,7 +471,7 @@ export default function HomePage() {
             <div className="feat-info">
               <span className="feat-badge">Featured Sermon</span>
               <h3 className="feat-title">{SERMONS[0].title}</h3>
-              <p className="feat-meta">Pastor James Mbewe &nbsp;·&nbsp; {SERMONS[0].date} &nbsp;·&nbsp; {SERMONS[0].ref}</p>
+              <p className="feat-meta">Pastor Blessings Mtonga &nbsp;·&nbsp; {SERMONS[0].date} &nbsp;·&nbsp; {SERMONS[0].ref}</p>
             </div>
           </div>
           {/* Cards */}
