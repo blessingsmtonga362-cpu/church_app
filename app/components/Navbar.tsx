@@ -1,34 +1,16 @@
 "use client";
-
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-/* ── SVG Cross Logo ─────────────────────────────────────────── */
-const CrossLogo = () => (
-  <svg viewBox="0 0 44 60" fill="none" xmlns="http://www.w3.org/2000/svg"
-    style={{ width: 28, height: 38 }}>
-    <rect x="16" y="0" width="12" height="60" rx="2" fill="currentColor" />
-    <rect x="0" y="16" width="44" height="12" rx="2" fill="currentColor" />
+const CrossIcon = () => (
+  <svg viewBox="0 0 44 60" fill="none" style={{ width: 32, height: 44 }}>
+    <rect x="16" y="0"  width="12" height="60" rx="2.5" fill="currentColor" />
+    <rect x="0"  y="17" width="44" height="12" rx="2.5" fill="currentColor" />
   </svg>
 );
 
-const MenuIcon = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
-    style={{ width: 24, height: 24 }}>
-    <path d="M3 6h18M3 12h18M3 18h18" strokeLinecap="round" />
-  </svg>
-);
-
-const CloseIcon = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
-    style={{ width: 24, height: 24 }}>
-    <path d="M18 6L6 18M6 6l12 12" strokeLinecap="round" />
-  </svg>
-);
-
-/* ── Nav links config ───────────────────────────────────────── */
-const NAV_LINKS = [
+const NAV = [
   { label: "Home",    href: "/" },
   { label: "About",   href: "/about" },
   { label: "Sermons", href: "/sermons" },
@@ -36,258 +18,166 @@ const NAV_LINKS = [
   { label: "Give",    href: "/give" },
 ];
 
-/* ── Component ──────────────────────────────────────────────── */
 export default function Navbar() {
-  const [scrolled, setScrolled] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
-  const pathname = usePathname();
+  const [up,   setUp]   = useState(false);   // scrolled up = solid bg
+  const [open, setOpen] = useState(false);
+  const path = usePathname();
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 60);
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    const fn = () => setUp(window.scrollY > 60);
+    window.addEventListener("scroll", fn, { passive: true });
+    return () => window.removeEventListener("scroll", fn);
   }, []);
+  useEffect(() => setOpen(false), [path]);
 
-  // Close mobile menu on route change
-  useEffect(() => { setMenuOpen(false); }, [pathname]);
+  const solid = up || open;
 
   return (
     <>
       <style>{`
-        .navbar {
-          position: fixed;
-          top: 0; left: 0; right: 0;
-          z-index: 200;
-          transition: background 0.4s, box-shadow 0.4s, border-color 0.4s;
+        .nb {
+          position: fixed; top: 0; left: 0; right: 0; z-index: 300;
+          transition: background 0.35s, box-shadow 0.35s, border-color 0.35s;
           border-bottom: 1px solid transparent;
         }
-        .navbar.scrolled {
-          background: rgba(253,251,248,0.97);
-          backdrop-filter: blur(12px);
-          box-shadow: 0 2px 24px rgba(107,39,55,0.08);
-          border-bottom-color: #EDE5D8;
-        }
-        .navbar.open {
-          background: #FDFBF8;
-          border-bottom-color: #EDE5D8;
+        .nb.solid {
+          background: rgba(255,255,255,0.97);
+          backdrop-filter: blur(16px);
+          box-shadow: 0 2px 24px rgba(139,26,46,0.07);
+          border-bottom-color: #E8D9C4;
         }
 
-        .nav-inner {
-          max-width: 1200px;
-          margin: 0 auto;
-          padding: 0 40px;
-          height: 76px;
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
+        /* Inner */
+        .nb-inner {
+          max-width: 1280px; margin: 0 auto; padding: 0 56px;
+          height: 88px;
+          display: flex; align-items: center; justify-content: space-between;
         }
 
         /* Logo */
-        .nav-logo {
-          display: flex;
-          align-items: center;
-          gap: 12px;
-          text-decoration: none;
-        }
-        .nav-logo .cross-wrap {
-          color: #6B2737;
-          transition: color 0.3s;
-        }
-        .navbar.scrolled .nav-logo .cross-wrap,
-        .navbar.open .nav-logo .cross-wrap {
-          color: #6B2737;
-        }
-        .navbar:not(.scrolled):not(.open) .nav-logo .cross-wrap {
-          color: #FAF7F2;
-        }
-        .nav-logo-text .church-name {
-          font-family: 'Cinzel', serif;
-          font-size: 17px;
-          font-weight: 700;
-          letter-spacing: 0.12em;
-          line-height: 1;
-          transition: color 0.3s;
-        }
-        .navbar.scrolled .church-name,
-        .navbar.open .church-name { color: #2C1810; }
-        .navbar:not(.scrolled):not(.open) .church-name { color: #FAF7F2; }
+        .nb-logo { display: flex; align-items: center; gap: 14px; text-decoration: none; }
+        .nb-logo .ico { transition: color 0.3s; }
+        .nb.solid  .ico { color: #8B1A2E; }
+        .nb:not(.solid) .ico { color: #FAF6F0; }
 
-        .nav-logo-text .church-sub {
+        .nb-logo-text .church {
           font-family: 'Cinzel', serif;
-          font-size: 7.5px;
-          letter-spacing: 0.38em;
-          margin-top: 2px;
-          transition: color 0.3s;
+          font-size: 22px; font-weight: 700; letter-spacing: 0.14em;
+          line-height: 1; transition: color 0.3s;
         }
-        .navbar.scrolled .church-sub,
-        .navbar.open .church-sub { color: #B8922A; }
-        .navbar:not(.scrolled):not(.open) .church-sub { color: #D4AF5A; }
+        .nb.solid  .church { color: #1C0A0F; }
+        .nb:not(.solid) .church { color: #FAF6F0; }
 
-        /* Desktop links */
-        .nav-links {
-          display: flex;
-          align-items: center;
-          gap: 36px;
-          list-style: none;
-        }
-        .nav-link-item a {
+        .nb-logo-text .sub {
           font-family: 'Cinzel', serif;
-          font-size: 10px;
-          letter-spacing: 0.2em;
-          text-transform: uppercase;
-          position: relative;
-          padding-bottom: 3px;
-          transition: color 0.3s;
+          font-size: 9px; letter-spacing: 0.42em; margin-top: 4px;
+          line-height: 1; transition: color 0.3s;
         }
-        .navbar.scrolled .nav-link-item a,
-        .navbar.open .nav-link-item a { color: #5C3D2E; }
-        .navbar:not(.scrolled):not(.open) .nav-link-item a { color: rgba(253,251,248,0.88); }
+        .nb.solid  .sub { color: #B8882A; }
+        .nb:not(.solid) .sub { color: #D4A840; }
 
-        .nav-link-item a::after {
-          content: '';
-          position: absolute;
-          bottom: 0; left: 0;
-          height: 1px; width: 0;
-          background: #B8922A;
-          transition: width 0.3s;
-        }
-        .nav-link-item a:hover::after,
-        .nav-link-item a.active::after { width: 100%; }
-        .nav-link-item a:hover { color: #6B2737 !important; }
-        .nav-link-item a.active { color: #6B2737 !important; font-weight: 600; }
-
-        /* CTA button */
-        .nav-cta {
+        /* Links */
+        .nb-links { display: flex; align-items: center; gap: 44px; list-style: none; }
+        .nb-links a {
           font-family: 'Cinzel', serif;
-          font-size: 9px;
-          letter-spacing: 0.22em;
-          text-transform: uppercase;
-          padding: 10px 22px;
-          border: 1.5px solid;
-          transition: all 0.3s;
-          text-decoration: none;
+          font-size: 12px; letter-spacing: 0.22em; text-transform: uppercase;
+          position: relative; padding-bottom: 4px; transition: color 0.28s;
         }
-        .navbar.scrolled .nav-cta,
-        .navbar.open .nav-cta {
-          color: #6B2737;
-          border-color: #6B2737;
+        .nb.solid  .nb-links a { color: #6B3D2E; }
+        .nb:not(.solid) .nb-links a { color: rgba(250,246,240,0.85); }
+        .nb-links a::after {
+          content: ''; position: absolute; bottom: 0; left: 0;
+          height: 2px; width: 0; background: #B8882A; transition: width 0.28s;
         }
-        .navbar:not(.scrolled):not(.open) .nav-cta {
-          color: #FAF7F2;
-          border-color: rgba(253,251,248,0.6);
+        .nb-links a:hover::after, .nb-links a.on::after { width: 100%; }
+        .nb-links a:hover { color: #8B1A2E !important; }
+        .nb-links a.on    { color: #8B1A2E !important; font-weight: 600; }
+
+        /* CTA */
+        .nb-cta {
+          font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: 0.24em;
+          text-transform: uppercase; padding: 12px 28px; border: 2px solid;
+          transition: all 0.28s; text-decoration: none;
         }
-        .navbar.scrolled .nav-cta:hover,
-        .navbar.open .nav-cta:hover {
-          background: #6B2737;
-          color: #FAF7F2;
-        }
-        .navbar:not(.scrolled):not(.open) .nav-cta:hover {
-          background: rgba(253,251,248,0.15);
-        }
+        .nb.solid  .nb-cta { color: #8B1A2E; border-color: #8B1A2E; }
+        .nb:not(.solid) .nb-cta { color: #FAF6F0; border-color: rgba(250,246,240,0.55); }
+        .nb.solid  .nb-cta:hover { background: #8B1A2E; color: #FAF6F0; }
+        .nb:not(.solid) .nb-cta:hover { background: rgba(250,246,240,0.12); }
 
         /* Burger */
-        .burger-btn {
-          background: none;
-          border: none;
-          padding: 4px;
-          display: none;
-          transition: color 0.3s;
+        .nb-burger {
+          background: none; border: none; padding: 6px;
+          display: none; align-items: center; justify-content: center;
+          transition: color 0.28s;
         }
-        .navbar.scrolled .burger-btn,
-        .navbar.open .burger-btn { color: #6B2737; }
-        .navbar:not(.scrolled):not(.open) .burger-btn { color: #FAF7F2; }
+        .nb.solid  .nb-burger { color: #8B1A2E; }
+        .nb:not(.solid) .nb-burger { color: #FAF6F0; }
 
         /* Mobile menu */
-        .mobile-menu {
-          background: #FDFBF8;
-          border-top: 1px solid #EDE5D8;
-          padding: 28px 40px 32px;
-          display: flex;
-          flex-direction: column;
-          gap: 0;
+        .nb-mobile {
+          background: #FFFFFF; border-top: 1px solid #E8D9C4;
+          padding: 28px 56px 36px;
         }
-        .mobile-link {
-          font-family: 'Cinzel', serif;
-          font-size: 12px;
-          letter-spacing: 0.2em;
-          text-transform: uppercase;
-          color: #5C3D2E;
-          padding: 14px 0;
-          border-bottom: 1px solid #EDE5D8;
-          display: block;
-          transition: color 0.2s, padding-left 0.2s;
+        .nb-mob-link {
+          display: block; font-family: 'Cinzel', serif;
+          font-size: 14px; letter-spacing: 0.22em; text-transform: uppercase;
+          color: #3D1F16; padding: 18px 0; border-bottom: 1px solid #EAE0D0;
+          transition: color 0.22s, padding-left 0.22s; text-decoration: none;
         }
-        .mobile-link:hover,
-        .mobile-link.active { color: #6B2737; padding-left: 8px; }
-        .mobile-cta {
-          margin-top: 20px;
-          text-align: center;
-          font-family: 'Cinzel', serif;
-          font-size: 10px;
-          letter-spacing: 0.22em;
-          text-transform: uppercase;
-          color: #FDFBF8;
-          background: #6B2737;
-          padding: 14px;
-          transition: background 0.3s;
+        .nb-mob-link:hover, .nb-mob-link.on { color: #8B1A2E; padding-left: 12px; }
+        .nb-mob-cta {
+          display: block; margin-top: 24px; padding: 18px; text-align: center;
+          font-family: 'Cinzel', serif; font-size: 12px; letter-spacing: 0.24em;
+          text-transform: uppercase; color: #FAF6F0; background: #8B1A2E;
+          transition: background 0.28s; text-decoration: none;
         }
-        .mobile-cta:hover { background: #4A1826; }
+        .nb-mob-cta:hover { background: #6A1222; }
 
-        @media (max-width: 900px) {
-          .nav-links, .nav-cta { display: none; }
-          .burger-btn { display: flex; }
+        @media (max-width: 960px) {
+          .nb-links, .nb-cta { display: none !important; }
+          .nb-burger { display: flex !important; }
         }
-        @media (max-width: 480px) {
-          .nav-inner { padding: 0 20px; }
-          .mobile-menu { padding: 24px 20px 28px; }
+        @media (max-width: 600px) {
+          .nb-inner { padding: 0 24px; height: 76px; }
+          .nb-mobile { padding: 24px 24px 32px; }
+          .nb-logo-text .church { font-size: 19px; }
         }
       `}</style>
 
-      <nav className={`navbar ${scrolled ? "scrolled" : ""} ${menuOpen ? "open" : ""}`}>
-        <div className="nav-inner">
-          {/* Logo */}
-          <Link href="/" className="nav-logo">
-            <span className="cross-wrap"><CrossLogo /></span>
-            <div className="nav-logo-text">
-              <div className="church-name">BIMTO</div>
-              <div className="church-sub">CHURCH</div>
+      <nav className={`nb ${solid ? "solid" : ""}`}>
+        <div className="nb-inner">
+          <Link href="/" className="nb-logo">
+            <span className="ico"><CrossIcon /></span>
+            <div className="nb-logo-text">
+              <div className="church">BIMTO</div>
+              <div className="sub">CHURCH</div>
             </div>
           </Link>
 
-          {/* Desktop nav */}
-          <ul className="nav-links">
-            {NAV_LINKS.map(({ label, href }) => (
-              <li key={href} className="nav-link-item">
-                <Link href={href} className={pathname === href ? "active" : ""}>{label}</Link>
+          <ul className="nb-links">
+            {NAV.map(({ label, href }) => (
+              <li key={href}>
+                <Link href={href} className={path === href ? "on" : ""}>{label}</Link>
               </li>
             ))}
           </ul>
 
-          <Link href="/visit" className="nav-cta hide-mobile">Plan Your Visit</Link>
+          <Link href="/visit" className="nb-cta" style={{ display: "inline-block" }}>Plan Your Visit</Link>
 
-          {/* Burger */}
-          <button
-            className="burger-btn"
-            onClick={() => setMenuOpen(!menuOpen)}
-            aria-label="Toggle menu"
-          >
-            {menuOpen ? <CloseIcon /> : <MenuIcon />}
+          <button className="nb-burger" onClick={() => setOpen(o => !o)} aria-label="Menu">
+            {open
+              ? <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ width:28, height:28 }}><path d="M18 6L6 18M6 6l12 12" strokeLinecap="round"/></svg>
+              : <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ width:28, height:28 }}><path d="M3 6h18M3 12h18M3 18h18" strokeLinecap="round"/></svg>
+            }
           </button>
         </div>
 
-        {/* Mobile dropdown */}
-        {menuOpen && (
-          <div className="mobile-menu">
-            {NAV_LINKS.map(({ label, href }) => (
-              <Link
-                key={href}
-                href={href}
-                className={`mobile-link ${pathname === href ? "active" : ""}`}
-              >
-                {label}
-              </Link>
+        {open && (
+          <div className="nb-mobile">
+            {NAV.map(({ label, href }) => (
+              <Link key={href} href={href} className={`nb-mob-link ${path === href ? "on" : ""}`}>{label}</Link>
             ))}
-            <Link href="/visit" className="mobile-cta">Plan Your Visit</Link>
+            <Link href="/visit" className="nb-mob-cta">Plan Your Visit</Link>
           </div>
         )}
       </nav>
