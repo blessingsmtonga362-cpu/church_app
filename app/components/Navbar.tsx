@@ -19,7 +19,7 @@ const NAV = [
 ];
 
 export default function Navbar() {
-  const [up,   setUp]   = useState(false);   // scrolled up = solid bg
+  const [up,   setUp]   = useState(false);  
   const [open, setOpen] = useState(false);
   const path = usePathname();
 

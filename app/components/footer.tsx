@@ -78,14 +78,14 @@ export default function Footer() {
         .ft-tagline {
           font-family:'Cormorant Garamond',serif; font-style:italic;
           font-size:clamp(1.05rem,1.4vw,1.2rem);
-          color:rgba(226,191,106,0.55); line-height:1.78; max-width:290px; margin-bottom:24px;
+          color:#FFD166;; line-height:1.78; max-width:290px; margin-bottom:24px;
         }
         .ft-service {
           background:rgba(139,26,46,0.25); border:1px solid rgba(139,26,46,0.45);
           padding:20px 24px; margin-bottom:28px;
         }
         .ft-svc-lbl {
-          font-family:'Cinzel',serif; font-size:9px; letter-spacing:0.34em;
+          font-family:'Cinzel',serif; font-size:18px; letter-spacing:0.34em;
           text-transform:uppercase; color:#B8882A; margin-bottom:10px;
         }
         .ft-svc-txt {
@@ -103,13 +103,13 @@ export default function Footer() {
 
         /* Link cols */
         .ft-col-title {
-          font-family:'Cinzel',serif; font-size:11px; letter-spacing:0.32em;
+          font-family:'Cinzel',serif; font-size:18px; letter-spacing:0.32em;
           text-transform:uppercase; color:#B8882A; margin-bottom:24px;
         }
         .ft-col-list { list-style:none; display:flex; flex-direction:column; gap:13px; }
         .ft-col-list a {
           font-family:'Cormorant Garamond',serif;
-          font-size:clamp(1rem,1.3vw,1.15rem); color:rgba(226,191,106,0.52);
+          font-size:clamp(1rem,1.3vw,1.15rem); color:#FFD166;
           transition:color 0.22s, padding-left 0.22s; display:block;
         }
         .ft-col-list a:hover { color:#FAF6F0; padding-left:8px; }
@@ -122,11 +122,11 @@ export default function Footer() {
         }
         .ft-copy {
           font-family:'Inter',sans-serif; font-size:12px; letter-spacing:0.1em;
-          text-transform:uppercase; color:rgba(226,191,106,0.28);
+          text-transform:uppercase; color:#FFD166;;
         }
         .ft-verse {
           font-family:'Cormorant Garamond',serif; font-style:italic;
-          font-size:clamp(0.95rem,1.2vw,1.08rem); color:rgba(226,191,106,0.28);
+          font-size:clamp(0.95rem,1.2vw,1.08rem); color:#FFD166;;
         }
 
         /* Buttons inside footer */
